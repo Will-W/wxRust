@@ -28,9 +28,9 @@ else(APPLE)
 endif(APPLE)
 
 set(RUSTC_FLAGS ${RUSTC_FLAGS}
-    -L ${LIBCLANG_PATH}
-    -L wxc
-    -L .
+    -L${LIBCLANG_PATH}
+    -Lwxc
+    -L.
 )
 set(GENSRC wxHaskell/wxc/src/include)
 set(GENSRCS
@@ -48,6 +48,19 @@ add_custom_command(
         rust-bindgen/src/macro.rs
         rust-bindgen/src/parser.rs
         rust-bindgen/src/types.rs
+        bindgen_patched
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/rust-bindgen
+)
+
+add_custom_target(bindgen_patched
+    COMMAND patch -p1 < ../rust-bindgen.patch
+    DEPENDS ${CMAKE_SOURCE_DIR}/rust-bindgen.patch
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/rust-bindgen
+)
+
+add_custom_target(bindgen_unpatched
+    COMMAND patch -p1 -R < ../rust-bindgen.patch
+    DEPENDS ${bindgen_FULL_TARGET}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/rust-bindgen
 )
 
@@ -62,7 +75,7 @@ add_custom_command(
         ${GENSRCS}
         > src/_unsafe.rs
     COMMAND ${PATCH_UNSAFE_RS}
-    DEPENDS ${CMAKE_SOURCE_DIR}/rust-bindgen/bindgen ${GENSRCS}
+    DEPENDS bindgen_unpatched ${GENSRCS}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 
