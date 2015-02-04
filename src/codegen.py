@@ -619,6 +619,29 @@ modules = {
                     'wxTreeCompanionWindow',
                     'wxTreeLayout',
                     'wxTreeLayoutStored',
+                    'wxAuiDefaultTabArt',
+                    'wxAuiToolBarEvent',
+                    'wxAuiToolBarItem',
+                    'wxAuiToolBarArt',
+                    'wxAuiDefaultToolBarArt',
+                    'wxAuiToolBar',
+                    'wxAuiNotebook',
+                    'wxAuiTabContainerButton',
+                    'wxAuiTabContainer',
+                    'wxAuiTabCtrl',
+                    'wxAuiTabArt',
+                    'wxAuiSimpleTabArt',
+                    'wxAuiManager',
+                    'wxAuiDockArt',
+                    'wxAuiPaneInfo',
+                    'wxAuiManagerEvent',
+                    'wxAuiNotebookEvent',
+                    'wxBookCtrlEvent',
+                    'wxBookCtrlBase',
+                    'wxAuiNotebookPage',
+                    'wxAuiNotebookPageArray',
+                    'wxAuiToolBarItemArray',
+                    'wxAuiPaneInfoArray',
                     ]
     },
 }
@@ -702,7 +725,8 @@ impl wxString {
                     self._print_class(clazz)
                     tmpClasses.remove(clazz)
                 classes = tmpClasses
-
+        
+        # print([i.name for i in classes])
         assert(len(classes) == 0)
     
     def _print_class(self, clazz):
