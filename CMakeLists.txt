@@ -33,12 +33,27 @@ set(RUSTC_FLAGS ${RUSTC_FLAGS}
     -L.
 )
 set(GENSRC wxHaskell/wxc/src/include)
-set(GENSRCS
+set(GENINPUT
     ${GENSRC}/wxc.h
 )
 
+set(GENOUTPUT
+    ${CMAKE_SOURCE_DIR}/src/_unavailable.rs
+    ${CMAKE_SOURCE_DIR}/src/advanced.rs
+    ${CMAKE_SOURCE_DIR}/src/base.rs
+    ${CMAKE_SOURCE_DIR}/src/core.rs
+    ${CMAKE_SOURCE_DIR}/src/gl.rs
+    ${CMAKE_SOURCE_DIR}/src/html.rs
+    ${CMAKE_SOURCE_DIR}/src/media.rs
+    ${CMAKE_SOURCE_DIR}/src/net.rs
+    ${CMAKE_SOURCE_DIR}/src/odbc.rs
+    ${CMAKE_SOURCE_DIR}/src/propertygrid.rs
+    ${CMAKE_SOURCE_DIR}/src/stc.rs
+    ${CMAKE_SOURCE_DIR}/src/xrc.rs
+)
+
 add_custom_command(
-    OUTPUT ${CMAKE_SOURCE_DIR}/rust-bindgen/bindgen
+    OUTPUT ${CMAKE_SOURCE_DIR}/rust-bindgen/target/bindgen
     COMMAND LIBCLANG_PATH=${LIBCLANG_PATH} cargo build --verbose
     DEPENDS
         rust-bindgen/src/clang.rs
@@ -48,7 +63,6 @@ add_custom_command(
         rust-bindgen/src/macro.rs
         rust-bindgen/src/parser.rs
         rust-bindgen/src/types.rs
-        bindgen_patched
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/rust-bindgen
 )
 
@@ -72,18 +86,17 @@ add_custom_command(
         `wx-config --cppflags`
         --include stdint.h
         --include time.h
-        ${GENSRCS}
+        ${GENINPUT}
         > src/_unsafe.rs
     COMMAND ${PATCH_UNSAFE_RS}
-    DEPENDS bindgen_unpatched ${GENSRCS}
+    DEPENDS ${GENINPUT}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 
 add_custom_command(
-    OUTPUT  ${CMAKE_SOURCE_DIR}/src/generated.dummy
-    COMMAND python src/codegen.py ${GENSRCS}
-    COMMAND touch  src/generated.dummy
-    DEPENDS src/codegen.py ${GENSRCS}
+    OUTPUT ${GENOUTPUT}
+    COMMAND python src/codegen.py ${GENINPUT}
+    DEPENDS src/codegen.py ${GENINPUT}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 
@@ -91,16 +104,13 @@ rust_crate(src/lib.rs
     TARGET_NAME wxrust
     DESTINATION lib
     DEPENDS
-        src/defs.rs
-        src/_unsafe.rs
-        src/generated.dummy
+        ${GENOUTPUT}
         wxc
 )
 
 rust_doc(src/lib.rs
     TARGET_NAME doc
     DESTINATION doc
-    DEPENDS src/generated.dummy
 )
 
 rust_crate(tests/test.rs
