@@ -674,14 +674,15 @@ class WrapperGenerator(object):
         for name, module in PY3 and modules.items() or modules.iteritems():
             with open('src/%s.rs' % name, 'w') as f:
                 self.__file = f
-                self.println('use libc::*;')
+                self.println('use libc::{c_int,c_void,c_char,c_short,c_float,c_double,c_long};')
                 if name == 'base':
                     self.println('use std::str;')
                 for m in module['depends']:
                     self.println('use %s::*;' % m)
                 self.println()
                 if name == 'base':
-                    self.println('''\
+                    self.println('''use std::ffi::CString;\
+
 #[link(name="wxc")]
 extern {
     fn wxString_CreateUTF8(buffer: *mut c_void) -> *mut c_void;
@@ -691,10 +692,9 @@ extern {
 }
 
 pub fn strToString(s: &str) -> wxString {
+    let c_str_ptr = CString::from_slice(s.as_bytes()).as_ptr();
     unsafe {
-        s.to_c_str().with_ref(|c_str| {
-            wxString::from(wxString_CreateUTF8(c_str as *mut c_void))
-        })
+        wxString::from(wxString_CreateUTF8(c_str_ptr as *mut c_void))
     }
 }
 
@@ -712,7 +712,7 @@ impl wxString {
             let charBuffer = wxString_GetUtf8(self.ptr);
             let utf8 = wxCharBuffer_DataUtf8(charBuffer);
             wxCharBuffer_Delete(charBuffer);
-            str::raw::from_c_str(utf8)
+            String::from_str(str::from_c_str(utf8))
         }
     }
 }
