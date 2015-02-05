@@ -19,12 +19,14 @@ if(APPLE)
     )
     set(LIBCLANG_PATH ${OSX_SDK}/Toolchains/XcodeDefault.xctoolchain/usr/lib)
     set(BINDGEN_LIBPATH DYLD_FALLBACK_LIBRARY_PATH=${LIBCLANG_PATH})
+    set(BINDGEN_PRELOAD)
 else(APPLE)
     set(PATCH_UNSAFE_RS)
     file(GLOB LIBCLANG_PATH1 "/usr/lib/llvm*/lib")
     file(GLOB LIBCLANG_PATH2 "/usr/lib64/llvm")
     set(LIBCLANG_PATH ${LIBCLANG_PATH1}${LIBCLANG_PATH2})
     set(BINDGEN_LIBPATH LD_LIBRARY_PATH=${LIBCLANG_PATH})
+    set(BINDGEN_PRELOAD LD_PRELOAD=${LIBCLANG_PATH}/libclang.so)
 endif(APPLE)
 
 set(RUSTC_FLAGS ${RUSTC_FLAGS}
@@ -80,7 +82,7 @@ add_custom_target(bindgen_unpatched
 
 add_custom_command(
     OUTPUT  ${CMAKE_SOURCE_DIR}/src/_unsafe.rs
-    COMMAND ${BINDGEN_LIBPATH} LD_LIBRARY_PATH=${CMAKE_SOURCE_DIR}/rust-bindgen/target ${CMAKE_SOURCE_DIR}/rust-bindgen/target/bindgen
+    COMMAND ${BINDGEN_PRELOAD} ${BINDGEN_LIBPATH} LD_LIBRARY_PATH=${CMAKE_SOURCE_DIR}/rust-bindgen/target ${CMAKE_SOURCE_DIR}/rust-bindgen/target/bindgen
         -allow-bitfields
         -x c++
         `wx-config --cppflags`
