@@ -80,7 +80,7 @@ add_custom_target(bindgen_unpatched
 
 add_custom_command(
     OUTPUT  ${CMAKE_SOURCE_DIR}/src/_unsafe.rs
-    COMMAND ${BINDGEN_LIBPATH} ${CMAKE_SOURCE_DIR}/rust-bindgen/bindgen
+    COMMAND ${BINDGEN_LIBPATH} LD_LIBRARY_PATH=${CMAKE_SOURCE_DIR}/rust-bindgen/target ${CMAKE_SOURCE_DIR}/rust-bindgen/target/bindgen
         -allow-bitfields
         -x c++
         `wx-config --cppflags`
@@ -104,6 +104,7 @@ rust_crate(src/lib.rs
     TARGET_NAME wxrust
     DESTINATION lib
     DEPENDS
+        ${CMAKE_SOURCE_DIR}/src/_unsafe.rs
         ${GENOUTPUT}
         wxc
 )
