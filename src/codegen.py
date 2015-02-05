@@ -1194,7 +1194,7 @@ class Function(object):
     def method_name(self, classname):
         _name = self.name[len(classname)+1:]
         _name = _name[0].lower() + _name[1:]
-        if _name in ['break', 'yield']:
+        if _name in ['break', 'yield', 'move']:
             _name += '_'
         if _name.startswith('create'):
             return 'new' + _name[len('create'):]
