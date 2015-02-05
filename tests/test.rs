@@ -1,8 +1,5 @@
 #![crate_id = "test#0.1"]
 
-#![feature(globs)]
-#![feature(macro_rules)]
-
 #![link_args="-lwxc"]
 
 extern crate libc;

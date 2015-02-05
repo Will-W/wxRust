@@ -11,6 +11,7 @@ pub mod _unsafe;
 pub mod advanced;
 pub mod base;
 pub mod core;
+pub mod cb;
 pub mod defs;
 pub mod gl;
 pub mod html;

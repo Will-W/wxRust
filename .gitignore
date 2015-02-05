@@ -4,6 +4,7 @@ src/_unavailable.rs
 src/_unsafe.rs
 src/advanced.rs
 src/base.rs
+src/cb.rs
 src/core.rs
 src/gl.rs
 src/html.rs

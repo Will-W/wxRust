@@ -43,6 +43,7 @@ set(GENOUTPUT
     ${CMAKE_SOURCE_DIR}/src/_unavailable.rs
     ${CMAKE_SOURCE_DIR}/src/advanced.rs
     ${CMAKE_SOURCE_DIR}/src/base.rs
+    ${CMAKE_SOURCE_DIR}/src/cb.rs
     ${CMAKE_SOURCE_DIR}/src/core.rs
     ${CMAKE_SOURCE_DIR}/src/gl.rs
     ${CMAKE_SOURCE_DIR}/src/html.rs
@@ -68,18 +69,6 @@ add_custom_command(
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/rust-bindgen
 )
 
-add_custom_target(bindgen_patched
-    COMMAND patch -p1 < ../rust-bindgen.patch
-    DEPENDS ${CMAKE_SOURCE_DIR}/rust-bindgen.patch
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/rust-bindgen
-)
-
-add_custom_target(bindgen_unpatched
-    COMMAND patch -p1 -R < ../rust-bindgen.patch
-    DEPENDS ${bindgen_FULL_TARGET}
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/rust-bindgen
-)
-
 add_custom_command(
     OUTPUT  ${CMAKE_SOURCE_DIR}/src/_unsafe.rs
     COMMAND ${BINDGEN_PRELOAD} ${BINDGEN_LIBPATH} LD_LIBRARY_PATH=${CMAKE_SOURCE_DIR}/rust-bindgen/target ${CMAKE_SOURCE_DIR}/rust-bindgen/target/bindgen
@@ -91,7 +80,7 @@ add_custom_command(
         ${GENINPUT}
         > src/_unsafe.rs
     COMMAND ${PATCH_UNSAFE_RS}
-    DEPENDS ${GENINPUT}
+    DEPENDS ${GENINPUT} ${CMAKE_SOURCE_DIR}/rust-bindgen/target/bindgen
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 
