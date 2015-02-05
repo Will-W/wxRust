@@ -1,2 +1,15 @@
 build
-src/generated.dummy
+__pycache__
+src/_unavailable.rs
+src/_unsafe.rs
+src/advanced.rs
+src/base.rs
+src/core.rs
+src/gl.rs
+src/html.rs
+src/media.rs
+src/net.rs
+src/odbc.rs
+src/propertygrid.rs
+src/stc.rs
+src/xrc.rs
