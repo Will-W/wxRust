@@ -1,15 +1,12 @@
 # wxRust
 
-master: [![master build status](https://travis-ci.org/kenz-gelsoft/wxRust.svg?branch=master)](https://travis-ci.org/kenz-gelsoft/wxRust)
-/ rust-0.10: [![rust 0.10 build status](https://travis-ci.org/kenz-gelsoft/wxRust.svg?branch=rust-0.10)](https://travis-ci.org/kenz-gelsoft/wxRust)
-/ rust-0.9: [![rust 0.9 build status](https://travis-ci.org/kenz-gelsoft/wxRust.svg?branch=rust-0.9)](https://travis-ci.org/kenz-gelsoft/wxRust)
-/ mac(0.10): [![Mac(0.10) build status](https://travis-ci.org/kenz-gelsoft/wxRust.svg?branch=rust-mac)](https://travis-ci.org/kenz-gelsoft/wxRust)
+master: [![master build status](https://travis-ci.org/Will-W/wxRust.svg?branch=master)](https://travis-ci.org/Will-W/wxRust)
 
 This is a [Rust](http://www.rust-lang.org/) binding for the [wxWidgets cross platform toolkit](http://www.wxwidgets.org/).
 
 ## API
 
-[wxRust API documentation](http://www.rust-ci.org/kenz-gelsoft/wxRust/doc/wx/)
+[wxRust API documentation](http://www.rust-ci.org/Will-W/wxRust/doc/wx/)
 
 ## How it works
 
@@ -19,10 +16,10 @@ The [wxc](https://github.com/wxHaskell/wxHaskell/tree/master/wxc) is a C languag
 
 We utilize the [rust-bindgen](https://github.com/crabtw/rust-bindgen)
 [![rust-bindgen build status](https://api.travis-ci.org/crabtw/rust-bindgen.svg?branch=master)](https://travis-ci.org/crabtw/rust-bindgen) 
-automatic rust binding generator for its [_unsafe](http://www.rust-ci.org/kenz-gelsoft/wxRust/doc/src/wx/home/travis/build/kenz-gelsoft/wxRust/src/_unsafe.rs.html) low-level binding.
+automatic rust binding generator for its [_unsafe](http://www.rust-ci.org/Will-W/wxRust/doc/src/wx/home/travis/build/Will-W/wxRust/src/_unsafe.rs.html) low-level binding.
 
 And we generate an OOP-style high-level binding (other modules than _unsafe)
-by [codegen.py code generator](https://github.com/kenz-gelsoft/wxRust/blob/rust-servo/src/codegen.py).
+by a python code generator.
 
 ## Build
 
@@ -84,4 +81,4 @@ At the CMake binary directory:
 
     make doc
 
-Generates [a rustdoc documentation](http://www.rust-ci.org/kenz-gelsoft/wxRust/doc/wx/) under doc directory.
+Generates a rustdoc documentation under doc directory.
