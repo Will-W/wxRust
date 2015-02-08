@@ -71,6 +71,7 @@ add_custom_command(
 
 add_custom_command(
     OUTPUT  ${CMAKE_SOURCE_DIR}/src/_unsafe.rs
+    COMMAND cat src/_unsafe.rs.prefix > src/_unsafe.rs
     COMMAND ${BINDGEN_PRELOAD} ${BINDGEN_LIBPATH} LD_LIBRARY_PATH=${CMAKE_SOURCE_DIR}/rust-bindgen/target ${CMAKE_SOURCE_DIR}/rust-bindgen/target/bindgen
         -allow-bitfields
         -x c++
@@ -78,7 +79,7 @@ add_custom_command(
         --include stdint.h
         --include time.h
         ${GENINPUT}
-        > src/_unsafe.rs
+        >> src/_unsafe.rs
     COMMAND ${PATCH_UNSAFE_RS}
     DEPENDS ${GENINPUT} ${CMAKE_SOURCE_DIR}/rust-bindgen/target/bindgen
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
@@ -91,7 +92,7 @@ add_custom_command(
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 
-rust_crate(src/lib.rs
+rust_crate_auto(src/lib.rs
     TARGET_NAME wxrust
     DESTINATION lib
     DEPENDS
@@ -105,7 +106,7 @@ rust_doc(src/lib.rs
     DESTINATION doc
 )
 
-rust_crate(tests/test.rs
+rust_crate_auto(tests/test.rs
     TARGET_NAME test_cmd
     DEPENDS
         tests/macros.rs
