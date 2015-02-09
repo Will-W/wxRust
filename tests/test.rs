@@ -1,9 +1,6 @@
-#![crate_id = "test#0.1"]
-
 #![link_args="-lwxc"]
 
 extern crate libc;
-//extern create native;
 extern crate wx;
 
 use libc::c_void;
@@ -13,30 +10,15 @@ use wx::defs::*;
 use wx::base::*;
 use wx::core::*;
 
-//mod macros;
+mod macros;
 
-
-//wxApp!(wx_main);
-
+wxApp!(wx_main);
 
 extern "C"
 fn wx_main() {
     let frame = make_frame();
     frame.show();
     frame.raise();
-}
-
-fn main() {
-    use libc::c_void;
-
-    use wx::base::Closure;
-    use wx::core::RustApp;
-
-    static nullptr: *mut c_void = 0 as *mut c_void;
-
-    let closure = Closure::new(wx_main as *mut c_void, nullptr);
-    let args: Vec<*mut i32> = Vec::new();
-    RustApp::initializeC(&closure, args.len() as i32, args.as_ptr() as *mut *mut i8);
 }
 
 fn make_frame() -> Frame {
