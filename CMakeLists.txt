@@ -92,7 +92,7 @@ add_custom_command(
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 
-rust_crate_auto(src/lib.rs
+rust_crate(src/lib.rs
     TARGET_NAME wxrust
     DESTINATION lib
     DEPENDS
@@ -106,7 +106,7 @@ rust_doc(src/lib.rs
     DESTINATION doc
 )
 
-rust_crate_auto(tests/test.rs
+rust_crate(tests/test.rs
     TARGET_NAME test_cmd
     DEPENDS
         tests/macros.rs
