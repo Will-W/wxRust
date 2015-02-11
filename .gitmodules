@@ -1,9 +1,9 @@
 [submodule "wxHaskell"]
 	path = wxHaskell
 	url = https://github.com/wxHaskell/wxHaskell.git
-[submodule "rust-bindgen"]
-	path = rust-bindgen
-	url = https://github.com/Will-W/rust-bindgen.git
 [submodule "RustCMake"]
 	path = RustCMake
 	url = https://github.com/SiegeLord/RustCMake.git
+[submodule "rust-bindgen"]
+	path = rust-bindgen
+	url = https://github.com/crabtw/rust-bindgen.git
