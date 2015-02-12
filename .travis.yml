@@ -1,5 +1,3 @@
-language: rust
-
 branches:
   only:
     - master
@@ -18,6 +16,8 @@ before_install:
   - yes | sudo apt-add-repository 'deb http://repos.codelite.org/wx3.0/ubuntu/ precise universe'
   - sudo apt-get update
 install:
+  - curl -s https://static.rust-lang.org/rustup.sh | sudo sh
+  - sudo ldconfig
   - sudo apt-get install libwxgtk3.0-0-unofficial libwxgtk3.0-dev
   - sudo apt-get install --force-yes libclang-3.4-dev
 script:
