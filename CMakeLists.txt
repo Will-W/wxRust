@@ -96,6 +96,7 @@ rust_crate(src/lib.rs
     TARGET_NAME wxrust
     DESTINATION lib
     DEPENDS
+        ${CMAKE_SOURCE_DIR}/src/lib.rs
         ${CMAKE_SOURCE_DIR}/src/_unsafe.rs
         ${GENOUTPUT}
         wxc
