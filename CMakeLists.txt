@@ -108,9 +108,10 @@ rust_doc(src/lib.rs
 )
 
 rust_crate(tests/test.rs
-    TARGET_NAME test_cmd
+    TARGET_NAME test_app
     DEPENDS
-        tests/macros.rs
+        ${CMAKE_SOURCE_DIR}/tests/test.rs
+        ${CMAKE_SOURCE_DIR}/tests/macros.rs
         ${wxrust_FULL_TARGET}
 )
 
@@ -124,7 +125,7 @@ if(APPLE)
         COMMAND touch Test.app
         DEPENDS tests/Info.plist ${test_cmd_FULL_TARGET}
     )
-    add_custom_target(test ALL DEPENDS Test.app)
+    add_custom_target(default ALL DEPENDS Test.app)
 else(APPLE)
-    add_custom_target(test ALL DEPENDS ${test_cmd_FULL_TARGET})
+    add_custom_target(default ALL DEPENDS ${test_app_FULL_TARGET})
 endif(APPLE)
