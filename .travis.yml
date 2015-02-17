@@ -7,7 +7,7 @@ branches:
 
 env:
   global:
-    - secure: UYDpf9nVGcps0HHE+P8fuaIaBT925/7XAlJWjThQtLe09QzA+54qYgtbwA0cNwOiLcke2j0W+9gY4JUhNNHhtatsQc4AJiGcwJ4eLm6VRnoTEKfJW04aaxsQ1H6YAveGLo6rpGmBFjcGfYMTsFA+GxHsl+Xg/n3+7os4Ww1Zz54=
+    - secure: jDCYERbsezNSosvJ8nPticN/IgdSgBMARDYBMRP2hvV86vcWxeMPXXkrLFRiHFxRs3bwN35kziZwKnrfu5UC2efG5Tj13nJIuAeOLrHUWuP5R68gRum4jDiDFo5B4ic9kEgbV0Ltxcw7/fka9dw4BfVRy3cJUk21RuiRLwBxbqU=
 
 before_install:
   - yes | sudo apt-key adv --fetch-keys http://repos.codelite.org/CodeLite.asc
